@@ -1,0 +1,186 @@
+app-root.xml Code: 
+
+<Frame defaultPage="home/home-page"></Frame>
+
+.................................................................................................................................
+app.css Code:
+
+/*
+In NativeScript, the app.css file is where you place CSS rules that
+you would like to apply to your entire application. Check out
+http://docs.nativescript.org/ui/styling for a full list of the CSS
+selectors and properties you can use to style UI components.
+
+/*
+For example, the following CSS rule changes the font size of all UI
+components that have the btn class name.
+*/
+.btn {
+    font-size: 18;
+}
+
+/*
+In many cases you may want to use the NativeScript core theme instead
+of writing your own CSS rules. For a full list of class names in the theme
+refer to http://docs.nativescript.org/ui/theme.
+*/
+@import '~nativescript-theme-core/css/core.light.css';
+
+.home-panel{
+    vertical-align: center;
+    font-size: 20;
+    margin: 15;
+}
+
+.description-label{
+    margin-bottom: 15;
+}
+
+FlexboxLayout { 
+	justify-content: center; 
+    align-items: center;
+    background-size: 300px 100px;  
+    background-image: url("https://mk0ehealtheletsj3t14.kinstacdn.com/wp-content/uploads/2017/08/fitness-excercise.jpg") ;
+  
+  } 
+ StackLayout {  
+	width: 250;  
+	padding: 10 16;  
+	background-color: #f0f0f0;  
+  }
+
+.................................................................................................................................
+app.js Code: 
+
+/*
+In NativeScript, the app.js file is the entry point to your application.
+You can use this file to perform app-level initialization, but the primary
+purpose of the file is to pass control to the app’s first module.
+*/
+
+let application = require("tns-core-modules/application");
+
+application.run({ moduleName: "app-root" });
+
+/*
+Do not place any code after the application has been started as it will not
+be executed on iOS.
+*/
+
+.................................................................................................................................
+home-page.js Code: 
+
+var page;
+var email;
+
+exports.loaded = function (args) {
+  page = args.object;
+};
+
+exports.signIn = function () {
+  email = page.getViewById("email");
+  console.log(email.text);
+};
+
+
+/*
+In NativeScript, a file with the same name as an XML file is known as
+a code-behind file. The code-behind is a great place to place your view
+logic, and to set up your page’s data binding.
+*/
+
+/*
+NativeScript adheres to the CommonJS specification for dealing with
+JavaScript modules. The CommonJS require() function is how you import
+JavaScript modules defined in other files.
+*/
+var frameModule = require("tns-core-modules/ui/frame");
+var HomeViewModel = require("./home-view-model");
+
+var homeViewModel = new HomeViewModel();
+
+function pageLoaded(args) {
+  /*
+    This gets a reference this page’s <Page> UI component. You can
+    view the API reference of the Page to see what’s available at
+    https://docs.nativescript.org/api-reference/classes/_ui_page_.page.html
+    */
+  var page = args.object;
+
+  /*
+    A page’s bindingContext is an object that should be used to perform
+    data binding between XML markup and JavaScript code. Properties
+    on the bindingContext can be accessed using the {{ }} syntax in XML.
+    In this example, the {{ message }} and {{ onTap }} bindings are resolved
+    against the object returned by createViewModel().
+
+    You can learn more about data binding in NativeScript at
+    https://docs.nativescript.org/core-concepts/data-binding.
+    */
+  page.bindingContext = homeViewModel;
+}
+
+/*
+Exporting a function in a NativeScript code-behind file makes it accessible
+to the file’s corresponding XML file. In this case, exporting the pageLoaded
+function here makes the pageLoaded="pageLoaded" binding in this page’s XML
+file work.
+*/
+exports.pageLoaded = pageLoaded;
+
+................................................................................................................................. 
+home-page.xml Code: 
+
+<Page loaded="pageLoaded" class="page" xmlns="http://www.nativescript.org/tns.xsd">
+
+    <ActionBar title="Lift Calculator"></ActionBar>
+    <FlexboxLayout>
+        <StackLayout>
+
+            <TextField hint="Email Address " keyboardType="email" autocorrect="false"
+                autocapitalizationType="none" />
+            <TextField hint="Password" secure="true" />
+
+            <Button text="Sign in" class="btn btn-primary" tap="signIn" />
+            <Button text="Sign up for Lift Calculator" class="link" tap="register" />
+        </StackLayout>
+    </FlexboxLayout>
+</Page> 
+
+................................................................................................................................. 
+home-view-model.js Code: 
+
+var observableModule = require("tns-core-modules/data/observable");
+
+function HomeViewModel() {
+  var viewModel = observableModule.fromObject({
+
+  });
+
+  return viewModel;
+}
+
+module.exports = HomeViewModel;
+
+..................................................................................................................................   
+home-page.css Code: 
+
+FlexboxLayout { 
+	justify-content: center; 
+    align-items: center;
+    background-size: 300px 100px;  
+    background-image: url("https://media4.s-nbcnews.com/j/newscms/2018_20/2436061/180517-weightlift-exercise-dumbell-ac-420p_f1aa4188147468b05216c825a2ed78d0.fit-2000w.jpg");
+  } 
+ StackLayout {  
+	width: 250;  
+	padding: 10 16;  
+	background-color: #f0f0f0;  
+  } 
+ ..................................................................................................................................
+
+
+
+
+
+
+
